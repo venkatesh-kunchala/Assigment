@@ -1,5 +1,4 @@
 # Assigment
-
 const COMMA_ENTRIES = [ // First name, City, Birth date
   'Mckayla, Atlanta, 5/29/1986',
   'Elliot, New York City, 4/3/1947',
@@ -9,24 +8,40 @@ const DOLLAR_ENTRIES = [ // City, Birth date, Last name, First name
   'NYC $ 12-1-1962 $ Bruen $ Rigoberto',
 ]
 
-
 class App {
   static run({ comma = [], dollar = [] }) {
     // INVOKE YOUR MAGICAL CODE HERE
-    let commaEntries = COMMA_ENTRIES.map((item) => item.split(","));
+    
+    //Remove comma symbol
+    
+    let commaEntries = comma.map((item) => item.split(","));
+		
+    //Updating the final output as we require
+    
+		let updatedCommaEntries = commaEntries.map((item) => {
+  		let val = "";
+  		return item.reduce((val, innerItem) => val + innerItem);
+		});
+		
 
-let updatedCommaEntries = commaEntries.map((item) => {
-  let val = "";
-  return item.reduce((val, innerItem) => val + innerItem);
-});
-console.log(updatedCommaEntries);
+		//Remove dollar symbol
+    
+    let dollarEntries = dollar.map((item) => item.split("$"));
 
-let dollarEntries = DOLLAR_ENTRIES.map((item) => item.split("$"));
-
-let updatedDollarEntries = dollarEntries.map((item) => {
-  return item[3].trim() + " " + item[0].trim() + " " + item[1].trim();
-});
-console.log(updatedDollarEntries);
+		//Removing last name and updating as we require in the output
+    
+		let updatedDollarEntries = dollarEntries.map((item) => {
+  		return item[3].trim() + " " + item[0].trim() + " " + item[1].trim().replace(/-/g,"/");
+		});
+    
+    //Printing as per excepted standard output
+    
+    for(let i=0,j=0;i<updatedCommaEntries.length,j<updatedDollarEntries.length;i++,j++){
+    	console.log(updatedCommaEntries[i]);
+      console.log(updatedDollarEntries[j]);
+    }
+    
+  }
 }
 
 App.run({ comma: COMMA_ENTRIES, dollar: DOLLAR_ENTRIES })
