@@ -9,59 +9,24 @@ const DOLLAR_ENTRIES = [ // City, Birth date, Last name, First name
   'NYC $ 12-1-1962 $ Bruen $ Rigoberto',
 ]
 
-class Formator {
-        //constructor
-
-  constructor (stringList)
-  {
-    this.format_stringList = stringList;
-    this.formator = [];
-  }
-
-       //format Function of deleting symbols like , and $ of original array to an array of words
-
-	format(element)
-  {
-    this.format_stringList.forEach((str, index) => {
-      this.formator[index] = str.split(element)
-    })
-  }
-
-        //getting data from App class as storing an array of having firstname,city and date
-
-  customizeFormat (c_fun) 
-  {
-    this.formator = c_fun(this.formator);
-  } 
-  
-        //Printing function of modified data as output
-
-  log() {
-    console.log(this.formator);
-  } 
-}
 
 class App {
   static run({ comma = [], dollar = [] }) {
     // INVOKE YOUR MAGICAL CODE HERE
-    const commaObj = new Formator(comma);
-    const dollarObj = new Formator(dollar);
+    let commaEntries = COMMA_ENTRIES.map((item) => item.split(","));
 
-    commaObj.format(",");
-    dollarObj.format("$");
+let updatedCommaEntries = commaEntries.map((item) => {
+  let val = "";
+  return item.reduce((val, innerItem) => val + innerItem);
+});
+console.log(updatedCommaEntries);
 
-    //Pass your custom arrray of words as callback to customize_Format 
-     dollarObj.customizeFormat(list_strs => {
-      let outputstring = [];
-      for(const [index, wordList] of list_strs.entries()){
-        outputstring[index] = [wordList[3], wordList[0], wordList[1].replace(/-/g, "/")]
-      }
-      return outputstring;
-    });
-   
-    commaObj.log();
-    dollarObj.log(); 
-  }
+let dollarEntries = DOLLAR_ENTRIES.map((item) => item.split("$"));
+
+let updatedDollarEntries = dollarEntries.map((item) => {
+  return item[3].trim() + " " + item[0].trim() + " " + item[1].trim();
+});
+console.log(updatedDollarEntries);
 }
 
 App.run({ comma: COMMA_ENTRIES, dollar: DOLLAR_ENTRIES })
